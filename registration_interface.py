@@ -33,6 +33,8 @@ final_transform = itk.CompositeTransform()
 final_transform.append_transform(my_initial_transform)
 final_transform.append_transform(my_transform)
 
+interpolator = itk.LinearInterpolateImageFunction.New(my_moving_image)
+
 my_warped_image = itk.resample_image_filter(
     my_moving_image,
     transform=final_transform,
