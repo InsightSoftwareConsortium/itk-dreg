@@ -34,7 +34,7 @@ final_transform.append_transform(my_initial_transform)
 final_transform.append_transform(my_transform)
 
 my_warped_image = itk.resample_image_filter(
-    image_insp_preprocessed,
+    my_moving_image,
     transform=final_transform,
     interpolator=interpolator,
     use_reference_image=True,
