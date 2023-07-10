@@ -1,0 +1,37 @@
+{
+  "name": "itk-neuroimage-dreg-app",
+  "version": "0.1.0",
+  "description": "Distributed registration of brain images.",
+  "type": "module",
+  "scripts": {
+    "start": "npm run copyShoelaceAssets && vite -c vite.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copyShoelaceAssets": "shx mkdir -p public && shx cp -r node_modules/@shoelace-style/shoelace/dist/assets public/",
+    "build": "npm run copyShoelaceAssets && vite -c vite.config.js build"
+  },
+  "keywords": [
+    "itk",
+    "neuroimage",
+    "brains",
+    "registration",
+    "wasm",
+    "webassembly",
+    "wasi"
+  ],
+  "author": "Matt McCormick <matt.mccormick@kitware.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@itk-wasm/elastix": "^0.1.0",
+    "itk-wasm": "^1.0.0-b.118"
+  },
+  "devDependencies": {
+    "@shoelace-style/shoelace": "^2.5.2",
+    "shx": "^0.3.4",
+    "vite": "^4.3.3",
+    "vite-plugin-static-copy": "^0.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InsightSoftwareConsortium/itk-dreg"
+  }
+}
