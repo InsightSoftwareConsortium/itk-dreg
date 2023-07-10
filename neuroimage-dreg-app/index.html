@@ -85,10 +85,38 @@ function notify(title, message, variant = 'primary', icon = 'info-circle', durat
     <img src="./logo.svg" class="logo vanilla" alt="ITK Wasm logo" />
   </a>
   <br />
-  <h1>neuroimage-dreg<h1>
+  <h2>neuroimage-dreg<h2>
   <small><i>Distributed registration of brain images.</i></small>
   <br /><br />
 
+  <sl-tabgroup>
+    <sl-tab slot="nav" panel="atlas">Atlas</sl-tab>
+    <sl-tab slot="nav" panel="subject">Subject</sl-tab>
+    <sl-tab slot="nav" panel="parameters">Parameters</sl-tab>
+    <sl-tab slot="nav" panel="result">Result</sl-tab>
+
+    <sl-tab-panel name="atlas">
+      This is where you can select or upload the atlas image.
+      <sl-form>
+        <sl-input type="file" name="atlas" label="Atlas" accept=".nii,.nii.gz"></sl-input>
+      </sl-form>
+    </sl-tab-panel>
+
+    <sl-tab-panel name="subject">
+      This is where you can select or upload the subject image.
+      <sl-form>
+        <sl-input type="file" name="subject" label="Subject" accept=".nii,.nii.gz"></sl-input>
+      </sl-form>
+    </sl-tab-panel>
+
+    <sl-tab-panel name="parameters">
+      This is where you can select registration parameters.
+    </sl-tab-panel>
+
+    <sl-tab-panel name="result">
+      This is where you can view the registration result. Compare the Atlas to the Subject. Download the result. Visualization the resulting transformation. Visualize the atlas labels on the subject.
+    </sl-tab-panel>
+  </sl-tabgroup>
 </div>
 
 <script type="module" src="./index.ts"></script>
