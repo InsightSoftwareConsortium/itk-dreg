@@ -22,7 +22,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@itk-wasm/elastix": "^0.1.0",
-    "itk-wasm": "^1.0.0-b.118"
+    "itk-wasm": "^1.0.0-b.118",
+    "xstate": "^4.38.1"
   },
   "devDependencies": {
     "@shoelace-style/shoelace": "^2.5.2",
