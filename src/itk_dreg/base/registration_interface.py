@@ -2,13 +2,15 @@
 
 import itk
 from abc import ABC, abstractmethod
-from typing import Optional, Iterable, Tuple
+from typing import Iterable
 
 from .image_block_interface import (
     BlockPairRegistrationResult,
+    LocatedBlockResult,
     RegistrationTransformResult,
+    BlockInfo,
 )
-from .itk_typing import ImageType, ImageReaderType, ImageRegionType, TransformType
+from .itk_typing import ImageType, ImageReaderType, TransformType
 
 """
 Defines extensible components to extend with concrete implementations.
@@ -66,7 +68,8 @@ class BlockPairRegistrationMethod(ABC):
         fixed_subimage: ImageType,
         moving_subimage: ImageType,
         initial_transform: TransformType,
-        **kwargs
+        block_info: BlockInfo,
+        **kwargs,
     ) -> BlockPairRegistrationResult:
         """
         Run image-to-image pairwise registration.
@@ -86,6 +89,10 @@ class BlockPairRegistrationMethod(ABC):
             image voxel data.
         :param initial_transform: The forward transform representing an initial alignment
             mapping from fixed to moving image space.
+        :returns: The result of block pairwise registration, including a status code indicating
+            whether registration succeeded, a forward transform to run after the initial transform,
+            the domain over which the forward transform is considered valid, and an optional
+            inverse transform. May be extended with additional implementation-specific information.
         """
         pass
 
@@ -98,17 +105,17 @@ class ReduceResultsMethod(ABC):
     Extend this class to implement a custom method mapping block results to a general transform.
 
     Possible implementations could include methods for finding global consensus among results,
-    stitching methods to yield a piecewise transform, or patchwise methods to normalize among
+    combination methods to yield a piecewise transform, or patchwise methods to normalize among
     bounded transform domains.
     """
 
     @abstractmethod
     def __call__(
         self,
-        block_results: Iterable[Tuple[ImageType, BlockPairRegistrationResult]],
+        block_results: Iterable[LocatedBlockResult],
         fixed_reader_ctor: ConstructReaderMethod,
         initial_transform: itk.Transform,
-        **kwargs
+        **kwargs,
     ) -> RegistrationTransformResult:
         """
         :param block_results: An iterable collection of subimages in fixed space
@@ -131,12 +138,14 @@ my_initial_transform = ...
 
 # registration method returns an update to the initial transform
 
-my_transform = itk.register_dreg(
-    construct_fixed_image_method=my_construct_streaming_reader_method,
-    construct_moving_image_method=my_construct_streaming_reader_method,
+my_transform = itk_dreg.register_images(
+    target_da=target_image_dask_voxel_array,
     initial_transform=my_initial_transform,
-    registration_method=my_block_pair_registration_method_subclass,
-    reduce_method=my_reduce_registration_method_subclass
+    source_reader_ctor=my_construct_streaming_reader_method,
+    target_reader_ctor=my_construct_streaming_reader_method,
+    block_registration_method=my_block_pair_registration_method_subclass,
+    postprocess_method=my_postprocess_registration_method_subclass,
+    overlap_factors=[0.1,0.1,0.1]
 )
 
 final_transform = itk.CompositeTransform()
