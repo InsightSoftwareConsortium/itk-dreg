@@ -1,2 +1,10 @@
 __pycache__/
 
+.ipynb_checkpoints/
+examples/input
+examples/output
+examples/mydask.png
+
+data/
+_build/
+test/tmp/
