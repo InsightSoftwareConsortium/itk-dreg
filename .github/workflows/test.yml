@@ -1,0 +1,29 @@
+name: 'test'
+
+on:
+  [push, pull_request]
+
+jobs:
+  pytest:
+    name: "Test with PyTest"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    - name: Update pip
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: "Install Dependencies"
+      shell: bash
+      run: |
+        python -m pip install flit
+        cd src
+        flit install --deps develop
+
+    - name: "Run Tests"
+      shell: bash
+      run: |
+        pytest ./test -vvv -s -k "not localcluster and not serialize_pairwise_result"

@@ -1,0 +1,23 @@
+name: 'lint'
+
+on:
+  [push, pull_request]
+
+jobs:
+  ruff-check:
+    name: "Lint with Ruff"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3    
+    - uses: chartboost/ruff-action@v1
+      with:
+        src: "./src"
+
+  black-autoformat:
+    name: "Lint with Black"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: psf/black@stable
+      with:
+        src: "./src"

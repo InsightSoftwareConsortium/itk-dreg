@@ -1,0 +1,76 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "itk_dreg"
+authors = [{name = "InsightSoftwareConsortium", email = "matt.mccormick@kitware.com"}]
+license = {file = "LICENSE"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: C++",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries",
+    "Operating System :: Android",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: MacOS"
+]
+requires-python = ">=3.9"
+dynamic = ["version", "description"]
+readme = "../README.md"
+keywords = ['ITK','InsightToolkit']
+
+dependencies = [
+    'dask[distributed] >=2023.10.0',
+    'itk >=5.4rc02',
+    'numpy'
+]
+
+[project.urls]
+Home = "https://github.com/InsightSoftwareConsortium/itk-dreg"
+
+[project.optional-dependencies]
+test = [
+    'itk-elastix>=0.19.1',
+    'itk-ioomezarrngff>=0.2.1',
+    'nbmake',
+    'pytest',
+    'scipy>=1.11.3'
+]
+
+dev = [
+    'black',
+    'pytest'
+]
+
+impl = [
+    'itk-elastix>=0.19.0',
+    'scipy>=1.11.3'
+]
+
+lightsheet = [
+    # https://github.com/AllenNeuralDynamics/aind-ccf-alignment-experiments
+    'aind_ccf_alignment_experiments',
+    's3fs',
+    'zarr',
+]
+
+notebook = [
+    'matplotlib',
+    'itkwidgets>=0.32.0',
+    'graphviz',
+]
+
+[tool.ruff]
+extend-ignore = ["E501"]
+
