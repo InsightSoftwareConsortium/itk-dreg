@@ -7,4 +7,4 @@ examples/mydask.png
 
 data/
 _build/
-test/tmp/
+tmp/
