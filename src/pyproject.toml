@@ -53,6 +53,13 @@ dev = [
     'pytest'
 ]
 
+doc = [
+    'sphinx>=7.2.6',
+    'sphinx-apidoc',
+    'sphinx-autobuild',
+    'furo'
+]
+
 impl = [
     'itk-elastix>=0.19.0',
     'scipy>=1.11.3'
