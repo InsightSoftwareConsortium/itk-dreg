@@ -3,6 +3,10 @@ name: 'doc'
 on:
   [push, pull_request]
 
+permissions:
+  pages: write
+  id-token: write
+
 jobs:
   sphinx-doc:
     name: "Build HTML Documentation with Sphinx"
@@ -39,3 +43,14 @@ jobs:
     - uses: actions/upload-pages-artifact@v2.0.0
       with:
         path: tmp/html
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - sphinx-doc
+    runs-on: ubuntu-22.04
+    name: "Deploy HTML Documentation"
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
