@@ -1,0 +1,59 @@
+name: 'build-test-publish'
+
+on:
+  [push, pull_request]
+
+jobs:
+  build_wheel:
+    name: Build Python wheels
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: "Build pure Python wheels"
+        run: |
+          python -m pip wheel -w dist -e src/
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: wheel
+          path: ./dist/itk_dreg-*.whl
+
+  pytest:
+    name: "Test with PyTest"
+    runs-on: ubuntu-latest
+    needs:
+      - build_wheel
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    - name: Update pip
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: "Install Dependencies"
+      shell: bash
+      run: |
+        python -m pip install flit
+        cd src
+        flit install --deps develop
+
+    - name: Download Python Wheel Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: wheel
+
+    - name: "Install itk_dreg from Wheel Artifact"
+      run: |
+        wheel_name_full=`(find . -name "itk_dreg-*.whl")`
+        python -m pip uninstall -y itk_dreg
+        python -m pip install ${wheel_name_full}
+
+    - name: "Run Tests"
+      shell: bash
+      run: |
+        pytest ./test -vvv -s -k "not localcluster and not serialize_pairwise_result"
