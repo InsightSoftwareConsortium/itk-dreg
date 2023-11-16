@@ -1,7 +1,13 @@
 name: 'build-test-publish'
 
 on:
-  [push, pull_request]
+  [push, pull_request]    
+
+environment:
+  name: pypi
+  url: https://pypi.org/p/<your-pypi-project-name>
+permissions:
+  id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
 jobs:
   build_wheel:
@@ -75,4 +81,3 @@ jobs:
       uses: pypa/gh-action-pypi-publish@v1.8.10
       with:
         skip_existing: true
-        password: ${{ secrets.pypi_password }}
