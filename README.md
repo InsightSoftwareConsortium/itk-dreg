@@ -24,21 +24,25 @@ executed in succession to yield a pipeline for multiresolution image registratio
 
 ## Getting Started
 
-To use `itk-dreg`, clone the Git repository and install with `flit`.
+Install `itk-dreg` from the Python Package Index (PyPI):
 
-```py
-> python -m pip install flit
-> git clone https://www.github.com/InsightSoftwareConsortium/itk-dreg.git
-> cd itk-dreg/src
-itk-dreg/src > python -m flit install
+```sh
+(venv) > python -m pip install itk-dreg
+```
+
+For developers, clone the Git repository and install with `flit`.
+
+```sh
+(venv) > python -m pip install flit
+(venv) > git clone https://www.github.com/InsightSoftwareConsortium/itk-dreg.git
+(venv) > itk-dreg/src > python -m pip install ./src
 ```
 
 Several Jupyter Notebook examples are available for getting started. To run locally:
 
-```py
-itk-dreg/src > python -m flit install --extras
-itk-dreg/src > cd ../examples
-itk-dreg/examples > jupyter notebook
+```sh
+itk-dreg > python -m pip install ./src[notebook]
+itk-dreg > jupyter notebook
 ```
 
 ## Use Instructions
@@ -58,12 +62,14 @@ my_initial_transform = ...
 # registration method returns an update to the initial transform
 
 my_registration_schedule = itk_dreg.register_images(
-    fixed_chunk_size=(x,y,z),
-    initial_transform=my_initial_transform,
+    # Methods
     fixed_reader_ctor=my_construct_streaming_reader_method,
     moving_reader_ctor=my_construct_streaming_reader_method,
     block_registration_method=my_block_pair_registration_method_subclass,
     reduce_method=my_postprocess_registration_method_subclass,
+    # Data
+    fixed_chunk_size=(x,y,z),
+    initial_transform=my_initial_transform,
     overlap_factors=[0.1,0.1,0.1]
 )
 my_result = my_registration_schedule.registration_result.compute()
