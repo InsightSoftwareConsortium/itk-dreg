@@ -1,7 +1,13 @@
 name: 'build-test-publish'
 
 on:
-  [push, pull_request]
+  [push, pull_request]    
+
+environment:
+  name: pypi
+  url: https://pypi.org/p/<your-pypi-project-name>
+permissions:
+  id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
 jobs:
   build_wheel:
@@ -57,3 +63,21 @@ jobs:
       shell: bash
       run: |
         pytest ./test -vvv -s -k "not localcluster and not serialize_pairwise_result"
+
+  publish:
+    needs:
+      - build_wheel
+      - pytest
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+    steps:
+    - name: Download Python Wheel Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: wheel
+        path: dist
+
+    - name: "Publish Python wheel to the Python Package Index"
+      uses: pypa/gh-action-pypi-publish@v1.8.10
+      with:
+        skip_existing: true
