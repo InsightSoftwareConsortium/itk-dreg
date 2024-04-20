@@ -1,7 +1,6 @@
-name: 'doc'
+name: "doc"
 
-on:
-  [push, pull_request]
+on: [push, pull_request]
 
 permissions:
   pages: write
@@ -12,37 +11,37 @@ jobs:
     name: "Build HTML Documentation with Sphinx"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-    - name: Update pip
-      run: |
-        python -m pip install --upgrade pip
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Update pip
+        run: |
+          python -m pip install --upgrade pip
 
-    - name: "Install Dependencies"
-      shell: bash
-      run: |
-        python -m pip install flit
-        cd src
-        flit install --deps develop
+      - name: "Install Dependencies"
+        shell: bash
+        run: |
+          python -m pip install flit
+          cd src
+          flit install --deps develop
 
-    - name: "Build HTML API Documentation"
-      shell: bash
-      run: |
-        sphinx-apidoc -o tmp/apidoc src/itk_dreg --full
-        sed -i -e 's/alabaster/furo/' tmp/apidoc/conf.py
-        sphinx-build tmp/apidoc tmp/html
+      - name: "Build HTML API Documentation"
+        shell: bash
+        run: |
+          sphinx-apidoc -o tmp/apidoc src/itk_dreg --full
+          sed -i -e 's/alabaster/furo/' tmp/apidoc/conf.py
+          sphinx-build tmp/apidoc tmp/html
 
-    - name: Upload HTML artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: itk-dreg-html-docs
-        path: tmp/html/*
+      - name: Upload HTML artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: itk-dreg-html-docs
+          path: tmp/html/*
 
-    - uses: actions/upload-pages-artifact@v2.0.0
-      with:
-        path: tmp/html
+      - uses: actions/upload-pages-artifact@v2.0.0
+        with:
+          path: tmp/html
 
   deploy:
     if: github.ref == 'refs/heads/main'
@@ -53,4 +52,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
