@@ -70,15 +70,14 @@ impl = [
 ]
 
 lightsheet = [
-    # https://github.com/AllenNeuralDynamics/aind-ccf-alignment-experiments
-    'aind_ccf_alignment_experiments',
+    'aind_ccf_alignment_experiments @ git+https://github.com/AllenNeuralDynamics/aind-ccf-alignment-experiments.git@756e846',
     's3fs',
     'zarr',
 ]
 
 notebook = [
     'matplotlib',
-    'itkwidgets>=0.32.0',
+    'itkwidgets[notebook]>=1.0a52',
     'graphviz',
 ]
 
@@ -87,6 +86,9 @@ extend-ignore = ["E501"]
 
 [tool.hatch.version]
 path = "itk_dreg/__init__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.envs.default]
 dependencies = [
