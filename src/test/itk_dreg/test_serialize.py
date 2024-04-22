@@ -1,11 +1,11 @@
-
 import itk
-itk.auto_progress(2)
 
 import pickle
 import dask.distributed.protocol
 
 import itk_dreg.base.image_block_interface
+
+itk.auto_progress(2)
 
 def test_serialize_pairwise_result():
     failure_result = itk_dreg.base.image_block_interface.BlockPairRegistrationResult(

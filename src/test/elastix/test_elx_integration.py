@@ -8,7 +8,6 @@ import itk
 import numpy as np
 import dask
 
-sys.path.append('./src')
 import itk_dreg.itk
 from itk_dreg.register import register_images
 
@@ -34,10 +33,10 @@ def test_run_dreg():
 
     fixed_arr = np.ones([100]*3)
     moving_arr = np.random.random_sample([50]*3).astype(np.float32)
-    
+
     register_method = ElastixDRegBlockPairRegistrationMethod()
     reduce_method = dreg_mock.CountingReduceResultsMethod()
-    
+
     registration_result = None
     registration_schedule = None
 
@@ -46,11 +45,13 @@ def test_run_dreg():
         MOVING_FILEPATH = f'{testdir}/moving_image.mha'
         fixed_image = itk.image_view_from_array(fixed_arr)
         itk.imwrite(fixed_image, FIXED_FILEPATH, compression=False)
-        fixed_cb = lambda : itk_dreg.itk.make_reader(FIXED_FILEPATH)
+        def fixed_cb():
+            return itk_dreg.itk.make_reader(FIXED_FILEPATH)
         moving_image = itk.image_view_from_array(moving_arr)
         moving_image.SetSpacing([2]*3)
         itk.imwrite(moving_image, MOVING_FILEPATH, compression=False)
-        moving_cb = lambda : itk_dreg.itk.make_reader(MOVING_FILEPATH)
+        def moving_cb():
+            return itk_dreg.itk.make_reader(MOVING_FILEPATH)
 
         parameter_object = itk.ParameterObject.New()
         parameter_object.AddParameterMap(

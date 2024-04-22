@@ -4,18 +4,18 @@ import sys
 import tempfile
 
 import itk
-itk.auto_progress(2)
 
 import numpy as np
 import dask
 
-sys.path.append('./src')
 import itk_dreg.itk
 import itk_dreg.reduce_dfield.dreg
 from itk_dreg.register import register_images
 
 sys.path.append("./test")
 from util import mock as dreg_mock
+
+itk.auto_progress(2)
 
 """
 Test the `itk_dreg` registration scheduling framework.
@@ -38,11 +38,13 @@ def test_run_dreg():
         MOVING_FILEPATH = f'{testdir}/moving_image.mha'
         fixed_image = itk.image_view_from_array(fixed_arr)
         itk.imwrite(fixed_image, FIXED_FILEPATH, compression=False)
-        fixed_cb = lambda : itk_dreg.itk.make_reader(FIXED_FILEPATH)
+        def fixed_cb():
+            return itk_dreg.itk.make_reader(FIXED_FILEPATH)
         moving_image = itk.image_view_from_array(moving_arr)
         moving_image.SetSpacing([2]*3)
         itk.imwrite(moving_image, MOVING_FILEPATH, compression=False)
-        moving_cb = lambda : itk_dreg.itk.make_reader(MOVING_FILEPATH)
+        def moving_cb():
+            return itk_dreg.itk.make_reader(MOVING_FILEPATH)
 
         registration_schedule = register_images(
             fixed_chunk_size=(10,20,100),

@@ -1,9 +1,10 @@
 import itk
-itk.auto_progress(2)
 
 import pickle
 
 import itk_dreg.elastix.serialize
+
+itk.auto_progress(2)
 
 def validate_parameter_maps(m1, m2):
     assert all([k in m2.keys() for k in m1.keys()])

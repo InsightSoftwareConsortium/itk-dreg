@@ -67,7 +67,7 @@ def moving_image_filepath(test_input_dir) -> str:
             image = itk.imread(f'{tmpdir}/HeadMRVolume_rigid.mha')
             itk.imwrite(image, MOVING_IMAGE_FILEPATH, compression=False)
     yield MOVING_IMAGE_FILEPATH
-    
+
 
 def test_run_singlethreaded(fixed_image_filepath, moving_image_filepath, test_output_dir):
     dask.config.set(scheduler='single-threaded')
@@ -109,7 +109,7 @@ def test_run_singlethreaded(fixed_image_filepath, moving_image_filepath, test_ou
 def test_localcluster(fixed_image_filepath, moving_image_filepath):
     import dask.distributed
     cluster = dask.distributed.LocalCluster(n_workers=1, threads_per_worker=1)
-    client = dask.distributed.Client(cluster)
+    client = dask.distributed.Client(cluster) # noqa: F841
 
     # Methods
     import functools
@@ -133,7 +133,7 @@ def test_localcluster(fixed_image_filepath, moving_image_filepath):
         reduce_method=reduce_method,
         overlap_factors=overlap_factors
     )
-    
+
     itk.auto_progress(0)
     registration_result = registration_graph.registration_result.compute()
     print(registration_result)

@@ -82,7 +82,7 @@ notebook = [
     'graphviz',
 ]
 
-[tool.ruff]
+[tool.ruff.lint]
 extend-ignore = ["E501"]
 
 [tool.hatch.version]

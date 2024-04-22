@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
-
-sys.path.append("src")
-
 import itk
 import numpy as np
 import pytest
 
-itk.auto_progress(2)
-
 from itk_dreg.reduce_dfield.transform_collection import TransformEntry, TransformCollection
+
+itk.auto_progress(2)
 
 def test_unbounded_transform():
     demo_transform = itk.TranslationTransform[itk.D,3].New()
