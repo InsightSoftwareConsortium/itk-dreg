@@ -1,4 +1,4 @@
-# `itk_dreg` Developer Notes
+# Developer Notes
 
 This section includes discussion and helpful tips for community members seeking
 to contribute to the `itk_dreg` ecosystem either directly or via extension modules.
