@@ -13,12 +13,14 @@ jobs:
           python-version: "3.11"
       - name: "Build pure Python wheels"
         run: |
-          python -m pip wheel -w dist -e src/
+          python -m pip install hatch
+          cd src
+          hatch build
 
       - uses: actions/upload-artifact@v4
         with:
           name: wheel
-          path: ./dist/itk_dreg-*.whl
+          path: ./src/dist/itk_dreg-*.whl
 
   pytest:
     name: "Test with PyTest"
@@ -36,27 +38,20 @@ jobs:
 
       - name: "Install Dependencies"
         shell: bash
+        working-directory: src
         run: |
-          python -m pip install hatch
-          cd src
-          hatch build
+          python -m pip install -e '.[test]'
 
-      - name: Download Python Wheel Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: wheel
-
-      - name: "Install itk-dreg from Wheel Artifact"
+      - name: "Install itk-dreg from source"
+        working-directory: src
         run: |
           wheel_name_full=`(find . -name "itk_dreg-*.whl")`
-          python -m pip uninstall -y itk_dreg
-          python -m pip install ${wheel_name_full}
+          python -m pip install -e '.[test]'
 
       - name: "Run Tests"
         shell: bash
+        working-directory: src
         run: |
-          cd src
-          pip install -e '.[test]'
           pytest -vvv -s -k "not localcluster and not serialize_pairwise_result"
 
   publish:
