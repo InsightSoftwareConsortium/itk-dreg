@@ -101,3 +101,6 @@ dependencies = [
 test = [
     "pytest -vvv -s"
 ]
+
+[tool.black]
+line-length = 88
