@@ -87,3 +87,17 @@ extend-ignore = ["E501"]
 
 [tool.hatch.version]
 path = "itk_dreg/__init__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+    'itk-elastix>=0.19.2',
+    'scipy>=1.11.3',
+    'itk-ioomezarrngff>=0.3rc1',
+    'nbmake',
+    'pytest',
+]
+
+[tool.hatch.envs.default.scripts]
+test = [
+    "pytest -vvv -s -k \"not localcluster and not serialize_pairwise_result\""
+]
