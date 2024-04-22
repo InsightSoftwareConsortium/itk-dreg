@@ -2,6 +2,8 @@
 
 A framework for distributed, large-scale image registration.
 
+[![Documentation Status](https://readthedocs.org/projects/itk-dreg/badge/?version=latest)](https://itk-dreg.readthedocs.io/en/latest/?badge=latest)
+
 ## Overview
 
 The ITK Distributed Registration module (`itk-dreg`) provides a framework based on the
