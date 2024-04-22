@@ -1,7 +1,6 @@
-name: 'test-notebooks'
+name: "test-notebooks"
 
-on:
-  [push, pull_request]
+on: [push, pull_request]
 
 env:
   aind-ccf-alignment-experiments-tag: 756e846d08b07fcffbc3c387216a59a9fa563fd6
@@ -11,32 +10,32 @@ jobs:
     name: "Test Jupyter Notebooks with PyTest"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-    - name: Update pip
-      run: |
-        python -m pip install --upgrade pip
-    - name: Setup Graphviz
-      uses: ts-graphviz/setup-graphviz@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Update pip
+        run: |
+          python -m pip install --upgrade pip
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
 
-    - name: "Install Dependencies Not Available on PyPI"
-      shell: bash
-      run: |
-        git clone https://github.com/AllenNeuralDynamics/aind-ccf-alignment-experiments.git
-        pushd aind-ccf-alignment-experiments
-        git checkout ${{ env.aind-ccf-alignment-experiments-tag }}
-        python -m pip install .
+      - name: "Install Dependencies Not Available on PyPI"
+        shell: bash
+        run: |
+          git clone https://github.com/AllenNeuralDynamics/aind-ccf-alignment-experiments.git
+          pushd aind-ccf-alignment-experiments
+          git checkout ${{ env.aind-ccf-alignment-experiments-tag }}
+          python -m pip install .
 
-    - name: "Install Dependencies with Flit"
-      shell: bash
-      run: |
-        python -m pip install flit
-        pushd src
-        flit install --extras all
+      - name: "Install Dependencies with Flit"
+        shell: bash
+        run: |
+          python -m pip install flit
+          pushd src
+          flit install --extras all
 
-    - name: "Run Tests"
-      shell: bash
-      run: |
-        pytest --nbmake --nbmake-timeout=30000 examples/*.ipynb -vvv -s -k "not LightsheetRegistration.ipynb"
+      - name: "Run Tests"
+        shell: bash
+        run: |
+          pytest --nbmake --nbmake-timeout=30000 examples/*.ipynb -vvv -s -k "not LightsheetRegistration.ipynb"
