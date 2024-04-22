@@ -1,10 +1,13 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
-name = "itk_dreg"
-authors = [{name = "InsightSoftwareConsortium", email = "matt.mccormick@kitware.com"}]
+name = "itk-dreg"
+authors = [
+    {name = "Matt McCormick", email = "matt.mccormick@kitware.com"},
+    {name = "Tom Birdsong", email = "tom.birdsong@kitware.com"}
+]
 license = {file = "LICENSE"}
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
@@ -26,23 +29,25 @@ classifiers = [
     "Operating System :: MacOS"
 ]
 requires-python = ">=3.9"
-dynamic = ["version", "description"]
+dynamic = ["version"]
 readme = "../README.md"
-keywords = ['ITK','InsightToolkit']
+keywords = ['itk','InsightToolkit','registration', 'brain','distributed', 'dask']
 
 dependencies = [
     'dask[distributed] >=2023.10.0',
-    'itk >=5.4rc02',
+    'itk >=5.4rc04',
     'numpy'
 ]
 
 [project.urls]
-Home = "https://github.com/InsightSoftwareConsortium/itk-dreg"
+Home = "https://itk-dreg.readthedocs.io/"
+Source = "https://github.com/InsightSoftwareConsortium/itk-dreg"
+Issues = "https://github.com/InsightSoftwareConsortium/issues"
 
 [project.optional-dependencies]
 test = [
-    'itk-elastix>=0.19.1',
-    'itk-ioomezarrngff>=0.2.1',
+    'itk-elastix>=0.19.2',
+    'itk-ioomezarrngff>=0.3rc1',
     'nbmake',
     'pytest',
     'scipy>=1.11.3'
@@ -60,7 +65,7 @@ doc = [
 ]
 
 impl = [
-    'itk-elastix>=0.19.0',
+    'itk-elastix>=0.19.2',
     'scipy>=1.11.3'
 ]
 
@@ -77,6 +82,25 @@ notebook = [
     'graphviz',
 ]
 
-[tool.ruff]
+[tool.ruff.lint]
 extend-ignore = ["E501"]
 
+[tool.hatch.version]
+path = "itk_dreg/__init__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+    'itk-elastix>=0.19.2',
+    'scipy>=1.11.3',
+    'itk-ioomezarrngff>=0.3rc1',
+    'nbmake',
+    'pytest',
+]
+
+[tool.hatch.envs.default.scripts]
+test = [
+    "pytest -vvv -s"
+]
+
+[tool.black]
+line-length = 88

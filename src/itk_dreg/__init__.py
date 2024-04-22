@@ -1,5 +1,5 @@
 """
-ITK-DREG Distributed registration framework.
+itk-dreg distributed registration framework.
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
