@@ -1,10 +1,8 @@
 
-from unittest.mock import MagicMock
-from typing import Optional, Iterable, Iterator
+from typing import Iterable, Iterator
 
 import itk
 
-from itk_dreg.base.itk_typing import ImageType, TransformType
 from itk_dreg.base.image_block_interface import BlockPairRegistrationResult, RegistrationTransformResult, BlockRegStatus, LocatedBlockResult
 from itk_dreg.base.registration_interface import BlockPairRegistrationMethod, ReduceResultsMethod
 

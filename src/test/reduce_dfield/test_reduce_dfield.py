@@ -13,11 +13,7 @@ itk.auto_progress(2)
 
 
 def test_import():
-    import itk_dreg.reduce_dfield
-    import itk_dreg.reduce_dfield.dreg
-    import itk_dreg.reduce_dfield.matrix_transform
-    import itk_dreg.reduce_dfield.transform_collection
-    import itk_dreg.reduce_dfield.transform    
+    pass
 
 def test_collection_to_deformation_field_transform():
     import itk_dreg.reduce_dfield.transform

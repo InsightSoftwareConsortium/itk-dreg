@@ -8,7 +8,6 @@ import logging
 import itk
 import numpy as np
 import dask
-import dask.array as da
 import pytest
 from urllib.request import urlretrieve
 

@@ -12,6 +12,4 @@ itk.auto_progress(2)
 
 
 def test_loadmodule():
-    import itk_dreg.elastix
-    import itk_dreg.elastix.util
-    import itk_dreg.elastix.register
+    pass

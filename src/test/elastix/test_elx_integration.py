@@ -7,7 +7,6 @@ import tempfile
 import itk
 import numpy as np
 import dask
-import dask.array as da
 
 sys.path.append('./src')
 import itk_dreg.itk

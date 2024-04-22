@@ -8,7 +8,6 @@ itk.auto_progress(2)
 
 import numpy as np
 import dask
-import dask.array as da
 
 sys.path.append('./src')
 import itk_dreg.itk

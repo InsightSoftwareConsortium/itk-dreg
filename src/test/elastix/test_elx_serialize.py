@@ -1,9 +1,7 @@
-from unittest.mock import DEFAULT
 import itk
 itk.auto_progress(2)
 
 import pickle
-import dask.distributed.protocol
 
 import itk_dreg.elastix.serialize
 

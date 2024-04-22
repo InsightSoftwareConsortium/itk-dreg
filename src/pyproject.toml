@@ -99,5 +99,5 @@ dependencies = [
 
 [tool.hatch.envs.default.scripts]
 test = [
-    "pytest -vvv -s -k \"not localcluster and not serialize_pairwise_result\""
+    "pytest -vvv -s"
 ]
