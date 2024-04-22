@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 environment:
   name: pypi
-  url: https://pypi.org/p/<your-pypi-project-name>
+  url: https://pypi.org/p/itk-dreg
 permissions:
   id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
 
