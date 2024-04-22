@@ -124,9 +124,11 @@ class TransformCollection:
             entry.transform.TransformPoint(input_pt) for entry in region_contributors
         ]
         weights = [
-            cls._physical_distance_from_edge(input_pt, entry.domain)[0]
-            if entry.domain
-            else MIN_WEIGHT
+            (
+                cls._physical_distance_from_edge(input_pt, entry.domain)[0]
+                if entry.domain
+                else MIN_WEIGHT
+            )
             for entry in region_contributors
         ]
 

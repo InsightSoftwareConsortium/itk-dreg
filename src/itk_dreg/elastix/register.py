@@ -208,9 +208,9 @@ class ElastixDRegBlockPairRegistrationMethod(BlockPairRegistrationMethod):
             physical_region=block_convert.image_to_physical_region(
                 image_region=fixed_subimage.GetBufferedRegion(),
                 ref_image=fixed_subimage,
-                src_transform=None
-                if preprocess_initial_transform
-                else initial_transform,
+                src_transform=(
+                    None if preprocess_initial_transform else initial_transform
+                ),
             ),
             spacing=itk.spacing(fixed_subimage),
             direction=fixed_subimage.GetDirection(),

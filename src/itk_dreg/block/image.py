@@ -182,9 +182,11 @@ def physical_region_to_itk_image(
 
     voxel_0_corner = np.array(
         [
-            np.min(output_region, axis=0)[dim]
-            if physical_step[dim] > 0
-            else np.max(output_region, axis=0)[dim]
+            (
+                np.min(output_region, axis=0)[dim]
+                if physical_step[dim] > 0
+                else np.max(output_region, axis=0)[dim]
+            )
             for dim in range(3)
         ]
     )
