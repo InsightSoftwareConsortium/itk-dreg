@@ -3,6 +3,7 @@
 > A framework for distributed, large-scale image registration.
 
 [![itk-dreg version](https://badge.fury.io/py/itk-dreg.svg)](https://pypi.org/project/itk-dreg/)
+[![build-test-publish](https://github.com/InsightSoftwareConsortium/itk-dreg/actions/workflows/build-test-publish.yml/badge.svg)](https://github.com/InsightSoftwareConsortium/itk-dreg/actions/workflows/build-test-publish.yml)
 
 ## Overview
 
